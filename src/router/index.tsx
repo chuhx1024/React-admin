@@ -8,6 +8,8 @@ import { createBrowserRouter, RouteObject } from 'react-router-dom'
 
 import { Outlet } from 'react-router-dom'
 
+import UserList from '@/views/userManager/userList'
+
 // 定义 meta 字段的类型
 export interface RouteMeta {
     key: string
@@ -39,22 +41,7 @@ export const siderbarRoutes: siderbarRouteConfig[] = [
 
     {
         path: '/user',
-        element: (
-            <div>
-                <Outlet />
-                User
-                <div style={{ lineHeight: '100px' }}>测试&lt;Content /&gt;组件滚动</div>
-                <div style={{ lineHeight: '100px' }}>测试&lt;Content /&gt;组件滚动</div>
-                <div style={{ lineHeight: '100px' }}>测试&lt;Content /&gt;组件滚动</div>
-                <div style={{ lineHeight: '100px' }}>测试&lt;Content /&gt;组件滚动</div>
-                <div style={{ lineHeight: '100px' }}>测试&lt;Content /&gt;组件滚动</div>
-                <div style={{ lineHeight: '100px' }}>测试&lt;Content /&gt;组件滚动</div>
-                <div style={{ lineHeight: '100px' }}>测试&lt;Content /&gt;组件滚动</div>
-                <div style={{ lineHeight: '100px' }}>测试&lt;Content /&gt;组件滚动</div>
-                <div style={{ lineHeight: '100px' }}>测试&lt;Content /&gt;组件滚动</div>
-                <div style={{ lineHeight: '100px' }}>测试&lt;Content /&gt;组件滚动</div>
-            </div>
-        ),
+        element: <Outlet />,
         meta: {
             key: '/user',
             icon: <UserOutlined />,
@@ -63,7 +50,7 @@ export const siderbarRoutes: siderbarRouteConfig[] = [
         children: [
             {
                 path: '/user/list',
-                element: <div>用户列表</div>,
+                element: <UserList />,
                 meta: {
                     key: '/user/list',
                     icon: <UserOutlined />,
