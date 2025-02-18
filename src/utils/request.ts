@@ -1,12 +1,10 @@
 import axios, { type AxiosRequestConfig, type AxiosResponse } from 'axios'
 import { getToken, getProjectId } from '@/utils/handleCookie'
 import { message } from 'antd'
-import { removeToken } from '@/utils/handleCookie'
-// import { useNavigate } from 'react-router-dom'
 
 const service = axios.create({
     baseURL: '/api',
-    timeout: 100000000000000, // request timeout
+    timeout: 100000, // request timeout
 })
 
 // request interceptor
@@ -30,7 +28,7 @@ service.interceptors.response.use(
     (error) => {
         if (error.response.status === 401) {
             message.error('登录过期,请重新登录!')
-            removeToken()
+            // 调取自定义监听 完成退出登录逻辑
             window.dispatchEvent(new CustomEvent('unauthorized'))
         }
         return error

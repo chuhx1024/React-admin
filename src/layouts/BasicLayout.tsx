@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
 
 import { Layout, Menu, Button, Dropdown, Space, Avatar, type MenuProps } from 'antd'
 import { MenuFoldOutlined, MenuUnfoldOutlined, DownOutlined, UserOutlined } from '@ant-design/icons'
 import { SubMenuType, MenuItemType } from 'antd/es/menu/interface'
 import { siderbarRoutes, type siderbarRouteConfig } from '@/router/index'
+import { removeCookie } from '@/utils/handleCookie'
 
 const layoutStyle = {
     overflow: 'hidden',
@@ -59,13 +60,26 @@ const BasicLayout: React.FC = () => {
             loginOut()
         }
     }
-
-    const loginOut = () => {
+    // 为了确保 loginOut 函数不会在每次渲染时重新创建，可以使用 useCallback 钩子来缓存该函数。这样可以避免 useEffect 中的依赖项频繁变化，从而消除警告
+    const loginOut = useCallback(() => {
         // 退出登录逻辑
         // 清除登录状态和缓存
-        // 重定向到登录页面
+        removeCookie()
         navigate('/login')
-    }
+    }, [navigate])
+
+    // 自定义事件 为了 utils/request.ts 中，当登录过期时，可以清除登录状态和缓存，并重定向到登录页面
+    useEffect(() => {
+        const handleUnauthorized = () => {
+            loginOut()
+        }
+
+        window.addEventListener('unauthorized', handleUnauthorized)
+        // 返回一个清理函数，确保组件卸载时移除事件监听器 这个清理函数会在组件卸载时自动调用，不需要手动调用。
+        return () => {
+            window.removeEventListener('unauthorized', handleUnauthorized)
+        }
+    }, [loginOut])
 
     const generateMenuItems = (routes: siderbarRouteConfig[]): (SubMenuType | MenuItemType)[] => {
         return routes
