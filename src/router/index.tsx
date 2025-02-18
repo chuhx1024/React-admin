@@ -9,6 +9,7 @@ import { createBrowserRouter, RouteObject } from 'react-router-dom'
 import { Outlet } from 'react-router-dom'
 
 import UserList from '@/views/userManager/userList'
+import CreateUser from '@/views/userManager/createUser'
 
 // 定义 meta 字段的类型
 export interface RouteMeta {
@@ -49,21 +50,21 @@ export const siderbarRoutes: siderbarRouteConfig[] = [
         },
         children: [
             {
+                path: '/user/add',
+                element: <CreateUser />,
+                meta: {
+                    key: '/user/add',
+                    icon: <UserOutlined />,
+                    label: '新建用户',
+                },
+            },
+            {
                 path: '/user/list',
                 element: <UserList />,
                 meta: {
                     key: '/user/list',
                     icon: <UserOutlined />,
                     label: '用户列表',
-                },
-            },
-            {
-                path: '/user/add',
-                element: <div>创建用户</div>,
-                meta: {
-                    key: '/user/add',
-                    icon: <UserOutlined />,
-                    label: '新建用户',
                 },
             },
         ],
