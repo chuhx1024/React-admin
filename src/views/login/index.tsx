@@ -1,23 +1,35 @@
 import React from 'react'
-import { Flex, Button, Checkbox, Form, Input, type FormProps } from 'antd'
+import { Flex, Button, Checkbox, Form, Input, type FormProps, message } from 'antd'
+import { useNavigate } from 'react-router-dom'
+import { setToken } from '@/utils/handleCookie'
 import styles from './login.module.scss'
+import { login } from '@/api/login'
 
 type FieldType = {
-    username?: string
-    password?: string
+    username: string
+    password: string
     remember?: string
-}
-
-const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
-    console.log('Success:', values)
-
-    console.log('Success:', values.username)
 }
 
 const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
     console.log('Failed:', errorInfo)
 }
 const Login: React.FC = () => {
+    const navigate = useNavigate()
+    const [messageApi] = message.useMessage()
+    const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
+        const { username, password } = values
+        const { code, msg, data } = await login({ username, password })
+
+        if (code === 200) {
+            messageApi.info('Hello, Ant Design!')
+            const { access_token, token_type } = data
+            setToken(access_token, token_type)
+            navigate('/')
+        } else {
+            messageApi.error(msg)
+        }
+    }
     return (
         <Flex className={styles.loginContainer} justify="center" align="center">
             <Form
