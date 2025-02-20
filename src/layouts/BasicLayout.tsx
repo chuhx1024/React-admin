@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { Outlet, useNavigate } from 'react-router-dom'
+import { Outlet, useNavigate, useLocation } from 'react-router-dom'
 
 import { Layout, Menu, Button, Dropdown, Space, Avatar, type MenuProps } from 'antd'
 import { MenuFoldOutlined, MenuUnfoldOutlined, DownOutlined, UserOutlined } from '@ant-design/icons'
@@ -18,7 +18,7 @@ const headerStyle: React.CSSProperties = {
     color: '#fff',
     height: 64,
     lineHeight: '64px',
-    padding: '0  20px 0 0',
+    padding: '0  12px 0 0',
     backgroundColor: '#fff',
     display: 'flex',
     justifyContent: 'space-between',
@@ -31,7 +31,6 @@ const contentStyle: React.CSSProperties = {
 }
 
 const siderStyle: React.CSSProperties = {
-    textAlign: 'center',
     lineHeight: '120px',
     color: '#fff',
     backgroundColor: '#fff',
@@ -106,6 +105,9 @@ const BasicLayout: React.FC = () => {
 
     const menuItems = generateMenuItems(siderbarRoutes)
 
+    const location = useLocation()
+    const selectedKeys = [location.pathname]
+
     return (
         <Layout style={layoutStyle}>
             <Sider style={siderStyle} trigger={null} collapsible collapsed={collapsed}>
@@ -113,6 +115,7 @@ const BasicLayout: React.FC = () => {
                 <Menu
                     mode="inline"
                     defaultSelectedKeys={['1']}
+                    selectedKeys={selectedKeys}
                     items={menuItems}
                     onClick={(e) => {
                         const menuKey = e.key
