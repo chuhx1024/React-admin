@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { Outlet, useNavigate, useLocation } from 'react-router-dom'
 
-import { Layout, Menu, Button, Dropdown, Space, Avatar, type MenuProps } from 'antd'
+import { Layout, Menu, Button, Dropdown, Space, Avatar, type MenuProps, Breadcrumb } from 'antd'
 import { MenuFoldOutlined, MenuUnfoldOutlined, DownOutlined, UserOutlined } from '@ant-design/icons'
 import { SubMenuType, MenuItemType } from 'antd/es/menu/interface'
 import { siderbarRoutes, type siderbarRouteConfig } from '@/router/index'
@@ -127,16 +127,34 @@ const BasicLayout: React.FC = () => {
             </Sider>
             <Layout>
                 <Header style={headerStyle}>
-                    <Button
-                        type="text"
-                        icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-                        onClick={() => setCollapsed(!collapsed)}
-                        style={{
-                            fontSize: '16px',
-                            width: 64,
-                            height: 64,
-                        }}
-                    />
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                        <Button
+                            type="text"
+                            icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+                            onClick={() => setCollapsed(!collapsed)}
+                            style={{
+                                fontSize: '16px',
+                                width: 64,
+                                height: 64,
+                            }}
+                        />
+                        <Breadcrumb
+                            items={[
+                                {
+                                    title: 'Home',
+                                },
+                                {
+                                    title: <a href="">Application Center</a>,
+                                },
+                                {
+                                    title: <a href="">Application List</a>,
+                                },
+                                {
+                                    title: 'An Application',
+                                },
+                            ]}
+                        />
+                    </div>
                     <Dropdown menu={{ items, onClick }}>
                         <a onClick={(e) => e.preventDefault()}>
                             <Space>
