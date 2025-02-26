@@ -7,6 +7,9 @@ import { SubMenuType, MenuItemType } from 'antd/es/menu/interface'
 import { siderbarRoutes, type siderbarRouteConfig } from '@/router/index'
 import { removeCookie } from '@/utils/handleCookie'
 
+import { useSelector, useDispatch } from 'react-redux'
+import { toggleCollapsed } from '@/stores/modules/appSlice/index'
+
 const layoutStyle = {
     overflow: 'hidden',
     width: '100%',
@@ -45,7 +48,8 @@ const logoStyle: React.CSSProperties = {
 
 const BasicLayout: React.FC = () => {
     const { Header, Sider, Content } = Layout
-    const [collapsed, setCollapsed] = useState(false)
+    const dispatch = useDispatch()
+    const collapsed = useSelector((state: { app: { collapsed: boolean } }) => state.app.collapsed)
     const navigate = useNavigate()
 
     const items: MenuProps['items'] = [
@@ -131,7 +135,7 @@ const BasicLayout: React.FC = () => {
                         <Button
                             type="text"
                             icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-                            onClick={() => setCollapsed(!collapsed)}
+                            onClick={() => dispatch(toggleCollapsed())}
                             style={{
                                 fontSize: '16px',
                                 width: 64,
