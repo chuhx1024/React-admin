@@ -27,7 +27,7 @@ export type RouteConfig = RouteObject & {
 }
 export type siderbarRouteConfig = RouteObject & {
     meta: RouteMeta
-    children?: RouteConfig[]
+    children?: siderbarRouteConfig[]
 }
 export const siderbarRoutes: siderbarRouteConfig[] = [
     {
