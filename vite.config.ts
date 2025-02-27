@@ -6,6 +6,13 @@ import path from 'path'
 export default defineConfig({
     plugins: [react()],
     base: './',
+    css: {
+        preprocessorOptions: {
+            scss: {
+                additionalData: `@use '@/styles/variables' as vars;`,
+            },
+        },
+    },
     resolve: {
         alias: {
             '@': path.resolve(__dirname, 'src'),

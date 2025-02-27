@@ -3,6 +3,7 @@ import { Button, Form, Input, message } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import { type IUserAddreq } from '@/api/types/user'
 import { addUser } from '@/api/user'
+import styles from './createUser.module.scss'
 
 const formItemLayout = {
     labelCol: {
@@ -145,6 +146,7 @@ const CreateUser: React.FC = () => {
                     </Button>
                 </Form.Item>
             </Form>
+            <div className={styles.loginContainer}>123</div>
         </>
     )
 }
