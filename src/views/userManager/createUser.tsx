@@ -7,11 +7,11 @@ import { addUser } from '@/api/user'
 const formItemLayout = {
     labelCol: {
         xs: { span: 24 },
-        sm: { span: 8 },
+        sm: { span: 4 },
     },
     wrapperCol: {
         xs: { span: 24 },
-        sm: { span: 16 },
+        sm: { span: 10 },
     },
 }
 
@@ -54,7 +54,7 @@ const CreateUser: React.FC = () => {
                 name="register"
                 onFinish={onFinish}
                 initialValues={{ email: '123@qq.com' }}
-                style={{ maxWidth: 600, padding: '20px' }}
+                style={{ padding: '20px' }}
                 scrollToFirstError
             >
                 <Form.Item

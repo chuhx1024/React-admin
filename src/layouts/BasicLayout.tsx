@@ -1,7 +1,10 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 
 import { Layout } from 'antd'
+
+import { motion, AnimatePresence } from 'framer-motion'
 
 import TheSider from './components/TheSider/index.tsx'
 import TheHeader from './components/TheHeader/index.tsx'
@@ -21,6 +24,7 @@ const contentStyle: React.CSSProperties = {
 
 const BasicLayout: React.FC = () => {
     const { Content } = Layout
+    const location = useLocation()
 
     return (
         <Layout style={layoutStyle}>
@@ -28,7 +32,17 @@ const BasicLayout: React.FC = () => {
             <Layout>
                 <TheHeader />
                 <Content style={contentStyle}>
-                    <Outlet /> {/* 子路由的出口 */}
+                    <AnimatePresence mode="wait">
+                        <motion.div
+                            key={location.pathname}
+                            initial={{ opacity: 1, x: -10 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            exit={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.5, type: 'tween', ease: 'easeInOut' }}
+                        >
+                            <Outlet /> {/* 子路由的出口 */}
+                        </motion.div>
+                    </AnimatePresence>
                 </Content>
             </Layout>
         </Layout>

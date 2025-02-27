@@ -4,6 +4,8 @@ import { useLocation } from 'react-router-dom'
 import { type siderbarRouteConfig } from '@/router/index'
 import { siderbarRoutes } from '@/router/index'
 
+import { motion, AnimatePresence } from 'framer-motion'
+
 const TheBreadcrumb: React.FC = () => {
     const location = useLocation()
     console.log(location, 123)
@@ -40,13 +42,27 @@ const TheBreadcrumb: React.FC = () => {
             }
         }
 
+        const animateItem = (
+            <AnimatePresence mode="wait">
+                <motion.div
+                    key={route.meta.label}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 10 }}
+                    transition={{ duration: 0.5, type: 'tween', ease: 'easeInOut' }}
+                >
+                    {isLast ? (
+                        <Typography.Text>{route.meta.label}</Typography.Text>
+                    ) : (
+                        <Typography.Link href={routeTo}>{route.meta.label}</Typography.Link>
+                    )}
+                </motion.div>
+            </AnimatePresence>
+        )
+
         return {
             key: routeTo,
-            title: isLast ? (
-                <Typography.Text>{route.meta.label}</Typography.Text>
-            ) : (
-                <Typography.Link href={routeTo}>{route.meta.label}</Typography.Link>
-            ),
+            title: animateItem,
         }
     })
     // 如果不是首页，添加一个首页在前面
