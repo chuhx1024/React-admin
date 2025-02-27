@@ -5,7 +5,7 @@ import { Layout } from 'antd'
 import TheBreadcrumb from './components/TheBreadcrumb'
 import TheUserInfoDropdown from './components/TheUserInfoDropdown'
 import TheHamburger from './components/TheHamburger'
-
+import TheFullScreen from './components/TheFullScreen'
 const headerStyle: React.CSSProperties = {
     color: '#fff',
     height: 64,
@@ -25,7 +25,10 @@ const TheHeader: React.FC = () => {
                 <TheHamburger />
                 <TheBreadcrumb />
             </div>
-            <TheUserInfoDropdown />
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+                <TheFullScreen />
+                <TheUserInfoDropdown />
+            </div>
         </Header>
     )
 }
